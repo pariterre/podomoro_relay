@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 
-import '/models/projects.dart';
-import '/models/users.dart';
+import '/models/project.dart';
 
 class GanttChartScreen extends StatefulWidget {
   const GanttChartScreen({
     super.key,
     required this.startingTime,
     required this.endingTime,
-    required this.users,
-    required this.projects,
   });
+
+  static const String route = '/gantt-screen';
 
   final DateTime startingTime;
   final DateTime endingTime;
-  final List<User> users;
-  final List<Project> projects;
 
   @override
   State<GanttChartScreen> createState() => _GanttChartScreenState();
@@ -72,7 +69,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     return 0;
   }
 
-  List<Widget> buildChartBars(List<Project> data, double chartViewWidth) {
+  List<Widget> buildChartBars(List<Task> data, double chartViewWidth) {
     List<Widget> chartBars = [];
 
     for (int i = 0; i < data.length; i++) {
@@ -168,7 +165,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
   }
 
   Widget buildChartForEachUser(
-      List<Project> userData, double chartViewWidth, User user) {
+      List<Task> userData, double chartViewWidth, User user) {
     var chartBars = buildChartBars(userData, chartViewWidth);
     return SizedBox(
       height: chartBars.length * 29.0 + 25.0 + 4.0,
@@ -213,21 +210,23 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     );
   }
 
-  List<Widget> buildChartContent(double chartViewWidth) {
+  List<Widget> buildChartContent(
+      {required Project project, required double chartViewWidth}) {
     List<Widget> chartContent = [];
 
-    widget.projects.sort((a, b) {
+    final tasks = [...project.tasks];
+    tasks.sort((a, b) {
       return a.startTime.millisecondsSinceEpoch -
           b.startTime.millisecondsSinceEpoch;
     });
 
     chartContent.add(buildChartForEachUser(
-        widget.projects, chartViewWidth, User(id: "-1", name: 'Toustes')));
+        tasks, chartViewWidth, User(id: "-1", name: 'Toustes')));
 
-    for (final user in widget.users) {
-      List<Project> projectsOfUser = [];
+    for (final user in project.users) {
+      List<Task> projectsOfUser = [];
 
-      projectsOfUser = widget.projects
+      projectsOfUser = tasks
           .where((project) => project.participants.contains(user.id))
           .toList();
 
@@ -255,14 +254,29 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(actions: [
-          IconButton(
-              icon: const Icon(Icons.zoom_out),
-              onPressed: () => onClickZoom(false)),
-          IconButton(
-              icon: const Icon(Icons.zoom_in),
-              onPressed: () => onClickZoom(true)),
-        ]),
-        body: ListView(children: buildChartContent(3000)));
+      appBar: AppBar(actions: [
+        IconButton(
+            icon: const Icon(Icons.zoom_out),
+            onPressed: () => onClickZoom(false)),
+        IconButton(
+            icon: const Icon(Icons.zoom_in),
+            onPressed: () => onClickZoom(true)),
+      ]),
+      body: FutureBuilder<Project>(
+        future: Project.fromJson(context, "assets/scenario_5_lin.json"),
+        builder: (ctx, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return ListView(
+            children: buildChartContent(
+              project: snapshot.data!,
+              chartViewWidth: 3000,
+            ),
+          );
+        },
+      ),
+      drawer: const Drawer(),
+    );
   }
 }
