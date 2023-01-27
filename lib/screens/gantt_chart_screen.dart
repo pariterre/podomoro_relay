@@ -222,7 +222,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     });
 
     chartContent.add(buildChartForEachUser(
-        widget.projects, chartViewWidth, User(id: -1, name: 'Toustes')));
+        widget.projects, chartViewWidth, User(id: "-1", name: 'Toustes')));
 
     for (final user in widget.users) {
       List<Project> projectsOfUser = [];
