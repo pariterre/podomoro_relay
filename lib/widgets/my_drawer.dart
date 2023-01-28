@@ -6,8 +6,9 @@ import '/screens/gantt_chart_screen.dart';
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
 
-  void _loadJson(BuildContext context) {
-    Navigator.of(context).pushReplacementNamed(GanttChartScreen.route);
+  void _loadJson(BuildContext context, path) {
+    Navigator.of(context)
+        .pushReplacementNamed(GanttChartScreen.route, arguments: path);
   }
 
   @override
@@ -18,12 +19,10 @@ class MyDrawer extends StatelessWidget {
       final filename = file.path.split("/").last.split(".").first;
       scenarios.add(ListTile(
         title: Text(filename),
-        onTap: () => _loadJson(context),
+        onTap: () => _loadJson(context, file.path),
       ));
     }
 
-    ListView(children: scenarios);
-
-    return Container();
+    return Drawer(child: ListView(children: scenarios));
   }
 }

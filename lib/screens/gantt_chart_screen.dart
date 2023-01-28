@@ -224,7 +224,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     });
 
     chartContent.add(buildChartForEachUser(
-        project, tasks, chartViewWidth, User(id: "-1", name: 'Toustes')));
+        project, tasks, chartViewWidth, User(id: '-1', name: 'Toustes')));
 
     for (final user in project.users) {
       List<Task> projectsOfUser = [];
@@ -256,8 +256,11 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final jsonPath = (ModalRoute.of(context)?.settings.arguments ??
+        'assets/scenario_5_lin.json') as String;
+
     return FutureBuilder<Project>(
-        future: Project.fromJson(context, "assets/scenario_5_lin.json"),
+        future: Project.fromJson(context, jsonPath),
         builder: (ctx, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());

@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: GanttChartScreen.route,
         routes: {
-          GanttChartScreen.route: (context) => const GanttChartScreen(),
+          GanttChartScreen.route: (context) =>
+              const GanttChartScreen(),
         });
   }
 }

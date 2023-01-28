@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class Project {
   });
 
   static Future<Project> fromJson(BuildContext context, String jsonPath) async {
-    String data = await DefaultAssetBundle.of(context).loadString(jsonPath);
+    final data = await File(jsonPath).readAsString();
     final jsonResult = jsonDecode(data);
 
     final s = jsonResult["startingTime"];
