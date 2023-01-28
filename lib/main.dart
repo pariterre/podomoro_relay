@@ -16,9 +16,6 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  DateTime get startingTime => DateTime(1, 1, 1, 12, 00);
-  DateTime get endingTime => DateTime(1, 1, 2, 14, 00);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -27,8 +24,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: GanttChartScreen.route,
         routes: {
-          GanttChartScreen.route: (context) => GanttChartScreen(
-              startingTime: startingTime, endingTime: endingTime),
+          GanttChartScreen.route: (context) => const GanttChartScreen(),
         });
   }
 }
