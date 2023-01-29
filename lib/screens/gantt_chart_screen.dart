@@ -259,32 +259,24 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     final jsonPath = (ModalRoute.of(context)?.settings.arguments ??
         'assets/scenario_5_lin.json') as String;
 
-    return FutureBuilder<Project>(
-        future: Project.fromJson(context, jsonPath),
-        builder: (ctx, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
+    final project = Project.fromJson(jsonPath);
+    _initializeLate(project);
 
-          final project = snapshot.data!;
-          _initializeLate(project);
-
-          return Scaffold(
-              appBar: AppBar(actions: [
-                IconButton(
-                    icon: const Icon(Icons.zoom_out),
-                    onPressed: () => onClickZoom(project, false)),
-                IconButton(
-                    icon: const Icon(Icons.zoom_in),
-                    onPressed: () => onClickZoom(project, true)),
-              ]),
-              body: ListView(
-                children: buildChartContent(
-                  project: project,
-                  chartViewWidth: 3000,
-                ),
-              ),
-              drawer: const MyDrawer());
-        });
+    return Scaffold(
+        appBar: AppBar(actions: [
+          IconButton(
+              icon: const Icon(Icons.zoom_out),
+              onPressed: () => onClickZoom(project, false)),
+          IconButton(
+              icon: const Icon(Icons.zoom_in),
+              onPressed: () => onClickZoom(project, true)),
+        ]),
+        body: ListView(
+          children: buildChartContent(
+            project: project,
+            chartViewWidth: 3000,
+          ),
+        ),
+        drawer: MyDrawer(project: project));
   }
 }

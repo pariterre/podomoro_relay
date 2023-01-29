@@ -12,232 +12,232 @@
     "tasks": [
         {
             "name": "Accueil",
-            "startTime": [1, 12, 30],
-            "endTime": [1, 12, 40],
+            "startTime": [1, 1, 1, 12, 30],
+            "endTime": [1, 1, 1, 12, 40],
             "participants": ["1", "2", "3", "4", "5"],
             "color": 4283215696
         },
         {
             "name": "Prez 1",
-            "startTime": [1, 12, 40],
-            "endTime": [1, 12, 43],
+            "startTime": [1, 1, 1, 12, 40],
+            "endTime": [1, 1, 1, 12, 43],
             "participants": ["1"],
             "color": 4283215696
         },
         {
             "name": "Prez 2",
-            "startTime": [1, 12, 43],
-            "endTime": [1, 12, 46],
+            "startTime": [1, 1, 1, 12, 43],
+            "endTime": [1, 1, 1, 12, 46],
             "participants": ["2"],
             "color": 4283215696
         },
         {
             "name": "Prez 3",
-            "startTime": [1, 12, 46],
-            "endTime": [1, 12, 49],
+            "startTime": [1, 1, 1, 12, 46],
+            "endTime": [1, 1, 1, 12, 49],
             "participants": ["3"],
             "color": 4283215696
         },
         {
             "name": "Prez 4",
-            "startTime": [1, 12, 49],
-            "endTime": [1, 12, 52],
+            "startTime": [1, 1, 1, 12, 49],
+            "endTime": [1, 1, 1, 12, 52],
             "participants": ["4"],
             "color": 4283215696
         },
         {
             "name": "Prez 5",
-            "startTime": [1, 12, 52],
-            "endTime": [1, 12, 55],
+            "startTime": [1, 1, 1, 12, 52],
+            "endTime": [1, 1, 1, 12, 55],
             "participants": ["5"],
             "color": 4283215696
         },
         {
             "name": "1 et 2",
-            "startTime": [1, 12, 55],
-            "endTime": [1, 13, 0],
+            "startTime": [1, 1, 1, 12, 55],
+            "endTime": [1, 1, 1, 13, 0],
             "participants": ["5"],
             "color": 4283215696
         },
         {
             "name": "Pomodoro 1 et 2",
-            "startTime": [1, 13, 0],
-            "endTime": [1, 17, 0],
+            "startTime": [1, 1, 1, 13, 0],
+            "endTime": [1, 1, 1, 17, 0],
             "participants": ["1", "2"],
             "color": 4288423856
         },
         {
             "name": "Pomodoro 3 et 4",
-            "startTime": [1, 18, 0],
-            "endTime": [1, 22, 0],
+            "startTime": [1, 1, 1, 18, 0],
+            "endTime": [1, 1, 1, 22, 0],
             "participants": ["3", "4"],
             "color": 4288423856
         },
         {
             "name": "Pomodoro 5 et 6",
-            "startTime": [1, 23, 0],
-            "endTime": [2, 3, 0],
+            "startTime": [1, 1, 1, 23, 0],
+            "endTime": [1, 1, 2, 3, 0],
             "participants": ["5", "6"],
             "color": 4288423856
         },
         {
             "name": "Pomodoro 1, 3 et 5",
-            "startTime": [2, 3, 30],
-            "endTime": [2, 6, 30],
+            "startTime": [1, 1, 2, 3, 30],
+            "endTime": [1, 1, 2, 6, 30],
             "participants": ["1", "3", "5"],
             "color": 4288423856
         },
         {
             "name": "Pomodoro 2, 4 et 6",
-            "startTime": [2, 7, 0],
-            "endTime": [2, 10, 0],
+            "startTime": [1, 1, 2, 7, 0],
+            "endTime": [1, 1, 2, 10, 0],
             "participants": ["2", "4", "6"],
             "color": 4288423856
         },
         {
             "name": "Pomodoro 1, 2, 3, 4, 5 et 6",
-            "startTime": [2, 10, 30],
-            "endTime": [2, 13, 0],
+            "startTime": [1, 1, 2, 10, 30],
+            "endTime": [1, 1, 2, 13, 0],
             "participants": ["1", "2", "3", "4", "5", "6"],
             "color": 4288423856
         },
         {
             "name": "Connexion 3 et 4",
-            "startTime": [1, 16, 50],
-            "endTime": [1, 17, 0],
+            "startTime": [1, 1, 1, 16, 50],
+            "endTime": [1, 1, 1, 17, 0],
             "participants": ["3", "4"],
             "color": 4294940672
         },
         {
             "name": "1, 2 et 3",
-            "startTime": [1, 17, 0],
-            "endTime": [1, 17, 15],
+            "startTime": [1, 1, 1, 17, 0],
+            "endTime": [1, 1, 1, 17, 15],
             "participants": ["1", "2", "3"],
             "color": 4283215696
         },
         {
             "name": "1, 2 et 4",
-            "startTime": [1, 17, 15],
-            "endTime": [1, 17, 30],
+            "startTime": [1, 1, 1, 17, 15],
+            "endTime": [1, 1, 1, 17, 30],
             "participants": ["1", "2", "4"],
             "color": 4283215696
         },
         {
             "name": "3 et 4",
-            "startTime": [1, 17, 45],
-            "endTime": [1, 18, 0],
+            "startTime": [1, 1, 1, 17, 45],
+            "endTime": [1, 1, 1, 18, 0],
             "participants": ["3", "4"],
             "color": 4283215696
         },
         {
             "name": "Connexion 5 et 6",
-            "startTime": [1, 21, 50],
-            "endTime": [1, 22, 0],
+            "startTime": [1, 1, 1, 21, 50],
+            "endTime": [1, 1, 1, 22, 0],
             "participants": ["5", "6"],
             "color": 4294940672
         },
         {
             "name": "3, 4 et 5",
-            "startTime": [1, 22, 0],
-            "endTime": [1, 22, 15],
+            "startTime": [1, 1, 1, 22, 0],
+            "endTime": [1, 1, 1, 22, 15],
             "participants": ["3", "4", "5"],
             "color": 4283215696
         },
         {
             "name": "3, 4 et 6",
-            "startTime": [1, 22, 15],
-            "endTime": [1, 22, 30],
+            "startTime": [1, 1, 1, 22, 15],
+            "endTime": [1, 1, 1, 22, 30],
             "participants": ["3", "4", "6"],
             "color": 4283215696
         },
         {
             "name": "5 et 6",
-            "startTime": [1, 22, 45],
-            "endTime": [1, 23, 0],
+            "startTime": [1, 1, 1, 22, 45],
+            "endTime": [1, 1, 1, 23, 0],
             "participants": ["5", "6"],
             "color": 4283215696
         },
         {
             "name": "Connexion 1, 3 et 5",
-            "startTime": [2, 3, 5],
-            "endTime": [2, 3, 15],
+            "startTime": [1, 1, 2, 3, 5],
+            "endTime": [1, 1, 2, 3, 15],
             "participants": ["1", "3", "5"],
             "color": 4294940672
         },
         {
             "name": "1, 3 et 5",
-            "startTime": [2, 3, 15],
-            "endTime": [2, 3, 30],
+            "startTime": [1, 1, 2, 3, 15],
+            "endTime": [1, 1, 2, 3, 30],
             "participants": ["1", "3", "5"],
             "color": 4283215696
         },
         {
             "name": "Connexion 2, 4 et 6",
-            "startTime": [2, 6, 35],
-            "endTime": [2, 6, 45],
+            "startTime": [1, 1, 2, 6, 35],
+            "endTime": [1, 1, 2, 6, 45],
             "participants": ["2", "4", "6"],
             "color": 4294940672
         },
         {
             "name": "2, 4 et 6",
-            "startTime": [2, 6, 45],
-            "endTime": [2, 7, 0],
+            "startTime": [1, 1, 2, 6, 45],
+            "endTime": [1, 1, 2, 7, 0],
             "participants": ["2", "4", "6"],
             "color": 4283215696
         },
         {
             "name": "Connexion 1, 2, 3, 4, 5 et 6",
-            "startTime": [2, 10, 5],
-            "endTime": [2, 10, 15],
+            "startTime": [1, 1, 2, 10, 5],
+            "endTime": [1, 1, 2, 10, 15],
             "participants": ["1", "2", "3", "4", "5", "6"],
             "color": 4294940672
         },
         {
             "name": "1, 2, 3, 4, 5 et 6",
-            "startTime": [2, 10, 15],
-            "endTime": [2, 10, 30],
+            "startTime": [1, 1, 2, 10, 15],
+            "endTime": [1, 1, 2, 10, 30],
             "participants": ["1", "2", "3", "4", "5", "6"],
             "color": 4283215696
         },
         {
             "name": "Pause 1",
-            "startTime": [1, 17, 30],
-            "endTime": [1, 17, 45],
+            "startTime": [1, 1, 1, 17, 30],
+            "endTime": [1, 1, 1, 17, 45],
             "participants": ["1", "2", "3", "4", "5", "6"],
             "color": 4280391411
         },
         {
             "name": "Pause 2",
-            "startTime": [1, 22, 30],
-            "endTime": [1, 22, 45],
+            "startTime": [1, 1, 1, 22, 30],
+            "endTime": [1, 1, 1, 22, 45],
             "participants": ["1", "2", "3", "4", "5", "6"],
             "color": 4280391411
         },
         {
             "name": "Pause 3",
-            "startTime": [2, 3, 0],
-            "endTime": [2, 3, 15],
+            "startTime": [1, 1, 2, 3, 0],
+            "endTime": [1, 1, 2, 3, 15],
             "participants": ["1", "2", "3", "4", "5", "6"],
             "color": 4280391411
         },
         {
             "name": "Pause 4",
-            "startTime": [2, 6, 30],
-            "endTime": [2, 6, 45],
+            "startTime": [1, 1, 2, 6, 30],
+            "endTime": [1, 1, 2, 6, 45],
             "participants": ["1", "2", "3", "4", "5", "6"],
             "color": 4280391411
         },
         {
             "name": "Pause 5",
-            "startTime": [2, 10, 0],
-            "endTime": [2, 10, 15],
+            "startTime": [1, 1, 2, 10, 0],
+            "endTime": [1, 1, 2, 10, 15],
             "participants": ["1", "2", "3", "4", "5", "6"],
             "color": 4280391411
         },
         {
             "name": "FIN!",
-            "startTime": [2, 13, 0],
-            "endTime": [2, 13, 5],
+            "startTime": [1, 1, 2, 13, 0],
+            "endTime": [1, 1, 2, 13, 5],
             "participants": ["1", "2", "3", "4", "5", "6"],
             "color": 4283215696
         }

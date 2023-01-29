@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-
 import 'task.dart';
 import 'users.dart';
 
@@ -22,8 +20,8 @@ class Project {
     this.tasks = const [],
   });
 
-  static Future<Project> fromJson(BuildContext context, String jsonPath) async {
-    final data = await File(jsonPath).readAsString();
+  static Project fromJson(String jsonPath) {
+    final data = File(jsonPath).readAsStringSync();
     final jsonResult = jsonDecode(data);
 
     final s = jsonResult["startingTime"];
@@ -43,5 +41,32 @@ class Project {
       users: users,
       tasks: tasks,
     );
+  }
+
+  void toJson(String jsonPath) {
+    final map = {
+      "startingTime": [
+        startingTime.year,
+        startingTime.month,
+        startingTime.day,
+        startingTime.hour,
+        startingTime.minute
+      ],
+      "endingTime": [
+        endingTime.year,
+        endingTime.month,
+        endingTime.day,
+        endingTime.hour,
+        endingTime.minute
+      ],
+      "users": users.map<Map<String, dynamic>>((e) => e.serialize()).toList(),
+      "tasks": tasks.map<Map<String, dynamic>>((e) => e.serialize()).toList(),
+    };
+    String json = jsonEncode(
+      map,
+    );
+
+    final file = File(jsonPath);
+    file.writeAsStringSync(json);
   }
 }

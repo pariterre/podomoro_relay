@@ -18,10 +18,20 @@ class Task extends ItemSerializable {
 
   Task.fromSerialized(map)
       : name = map['name'],
-        startTime = DateTime(1, 1, map['startTime'][0], map['startTime'][1],
-            map['startTime'][2]),
-        endTime = DateTime(1, 1, map['endTime'][0], map['endTime'][1],
-            map['endTime'][2]),
+        startTime = DateTime(
+          map['startTime'][0],
+          map['startTime'][1],
+          map['startTime'][2],
+          map['startTime'][3],
+          map['startTime'][4],
+        ),
+        endTime = DateTime(
+          map['endTime'][0],
+          map['endTime'][1],
+          map['endTime'][2],
+          map['endTime'][3],
+          map['endTime'][4],
+        ),
         participants = (map['participants'] as List<dynamic>).cast<String>(),
         color = Color(map['color']),
         super.fromSerialized(map);
@@ -29,8 +39,20 @@ class Task extends ItemSerializable {
   @override
   Map<String, dynamic> serializedMap() => {
         'name': name,
-        'startTime': startTime,
-        'endTime': endTime,
+        'startTime': [
+          startTime.year,
+          startTime.month,
+          startTime.day,
+          startTime.hour,
+          startTime.minute
+        ],
+        'endTime': [
+          endTime.year,
+          endTime.month,
+          endTime.day,
+          endTime.hour,
+          endTime.minute
+        ],
         'participants': participants,
         'color': color.value
       };
