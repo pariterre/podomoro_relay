@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '/models/project.dart';
 import '/widgets/my_drawer.dart';
+import '/widgets/task_manager.dart';
 
 class GanttChartScreen extends StatefulWidget {
   const GanttChartScreen({super.key});
@@ -13,71 +14,76 @@ class GanttChartScreen extends StatefulWidget {
 }
 
 class _GanttChartScreenState extends State<GanttChartScreen> {
+  Project? project;
   List<int> possibleTimeIncrements = [5, 10, 15, 30, 60];
   int currentTimeIncrement = 2;
   late int timeIncrements;
   late double viewRange;
   int viewRangeToFitScreen = 60;
 
-  void _initializeLate(Project project) {
-    timeIncrements = possibleTimeIncrements[currentTimeIncrement];
-    viewRange = calculateNumberOfMinutesBetween(
-        project.startingTime, project.endingTime);
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration.zero, () {
+      project = Project.fromJson((ModalRoute.of(context)?.settings.arguments ??
+          'assets/scenario_5_lin.json') as String);
+      timeIncrements = possibleTimeIncrements[currentTimeIncrement];
+      viewRange = _calculateNumberOfMinutesBetween(
+          project!.startingTime, project!.endingTime);
+      setState(() {});
+    });
   }
 
-  double calculateNumberOfMinutesBetween(DateTime from, DateTime to) {
+  double _calculateNumberOfMinutesBetween(DateTime from, DateTime to) {
     return 24 * 60 / timeIncrements * (to.day - from.day) +
         60 / timeIncrements * (to.hour - from.hour) +
         (to.minute - from.minute) / timeIncrements;
   }
 
-  double calculateDistanceToLeftBorder(
-      Project project, DateTime taskStartedAt) {
-    if (taskStartedAt.compareTo(project.startingTime) <= 0) {
+  double _calculateDistanceToLeftBorder(DateTime taskStartedAt) {
+    if (taskStartedAt.compareTo(project!.startingTime) <= 0) {
       return 0;
     } else {
-      return calculateNumberOfMinutesBetween(
-          project.startingTime, taskStartedAt);
+      return _calculateNumberOfMinutesBetween(
+          project!.startingTime, taskStartedAt);
     }
   }
 
-  double calculateRemainingWidth(
-    Project project,
-    DateTime taskStartedAt,
-    DateTime taskEndedAt,
-  ) {
+  double _calculateRemainingWidth(
+      DateTime taskStartedAt, DateTime taskEndedAt) {
     double projectLength =
-        calculateNumberOfMinutesBetween(taskStartedAt, taskEndedAt);
-    if (taskStartedAt.compareTo(project.startingTime) >= 0 &&
-        taskStartedAt.compareTo(project.endingTime) <= 0) {
+        _calculateNumberOfMinutesBetween(taskStartedAt, taskEndedAt);
+    if (taskStartedAt.compareTo(project!.startingTime) >= 0 &&
+        taskStartedAt.compareTo(project!.endingTime) <= 0) {
       if (projectLength <= viewRange) {
         return projectLength;
       } else {
         return viewRange -
-            calculateNumberOfMinutesBetween(
-                project.startingTime, taskStartedAt);
+            _calculateNumberOfMinutesBetween(
+                project!.startingTime, taskStartedAt);
       }
-    } else if (taskStartedAt.isBefore(project.startingTime) &&
-        taskEndedAt.isBefore(project.startingTime)) {
+    } else if (taskStartedAt.isBefore(project!.startingTime) &&
+        taskEndedAt.isBefore(project!.startingTime)) {
       return 0;
-    } else if (taskStartedAt.isBefore(project.startingTime) &&
-        taskEndedAt.isBefore(project.endingTime)) {
+    } else if (taskStartedAt.isBefore(project!.startingTime) &&
+        taskEndedAt.isBefore(project!.endingTime)) {
       return projectLength -
-          calculateNumberOfMinutesBetween(taskStartedAt, project.startingTime);
-    } else if (taskStartedAt.isBefore(project.startingTime) &&
-        taskEndedAt.isAfter(project.endingTime)) {
+          _calculateNumberOfMinutesBetween(
+              taskStartedAt, project!.startingTime);
+    } else if (taskStartedAt.isBefore(project!.startingTime) &&
+        taskEndedAt.isAfter(project!.endingTime)) {
       return viewRange;
     }
     return 0;
   }
 
-  List<Widget> buildChartBars(
-      Project project, List<Task> data, double chartViewWidth) {
+  List<Widget> _buildChartBars(List<Task> data, double chartViewWidth) {
     List<Widget> chartBars = [];
 
     for (int i = 0; i < data.length; i++) {
       var remainingWidth =
-          calculateRemainingWidth(project, data[i].startTime, data[i].endTime);
+          _calculateRemainingWidth(data[i].startTime, data[i].endTime);
       if (remainingWidth > 0) {
         chartBars.add(Container(
           decoration: BoxDecoration(
@@ -86,7 +92,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
           height: 25.0,
           width: remainingWidth * chartViewWidth / viewRangeToFitScreen,
           margin: EdgeInsets.only(
-              left: calculateDistanceToLeftBorder(project, data[i].startTime) *
+              left: _calculateDistanceToLeftBorder(data[i].startTime) *
                   chartViewWidth /
                   viewRangeToFitScreen,
               top: i == 0 ? 4.0 : 2.0,
@@ -111,7 +117,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     return chartBars;
   }
 
-  Widget buildHeader(Project project, double chartViewWidth, Color color) {
+  Widget _buildHeader(double chartViewWidth, Color color) {
     List<Widget> headerItems = [];
 
     headerItems.add(SizedBox(
@@ -125,7 +131,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
       ),
     ));
 
-    DateTime tempDate = project.startingTime;
+    DateTime tempDate = project!.startingTime;
     for (int i = 0; i < viewRange; i++) {
       headerItems.add(SizedBox(
         width: chartViewWidth / viewRangeToFitScreen,
@@ -149,7 +155,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     );
   }
 
-  Widget buildGrid(double chartViewWidth) {
+  Widget _buildGrid(double chartViewWidth) {
     List<Widget> gridColumns = [];
 
     for (int i = 0; i <= viewRange; i++) {
@@ -167,17 +173,17 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     );
   }
 
-  Widget buildChartForEachUser(
-      Project project, List<Task> userData, double chartViewWidth, User user) {
-    var chartBars = buildChartBars(project, userData, chartViewWidth);
+  Widget _buildChartForEachUser(
+      List<Task> userData, double chartViewWidth, User user) {
+    var chartBars = _buildChartBars(userData, chartViewWidth);
     return SizedBox(
       height: chartBars.length * 29.0 + 25.0 + 4.0,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
           Stack(fit: StackFit.loose, children: <Widget>[
-            buildGrid(chartViewWidth),
-            buildHeader(project, chartViewWidth, Colors.blue),
+            _buildGrid(chartViewWidth),
+            _buildHeader(chartViewWidth, Colors.blue),
             Container(
                 margin: const EdgeInsets.only(top: 25.0),
                 child: Column(
@@ -213,20 +219,19 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     );
   }
 
-  List<Widget> buildChartContent(
-      {required Project project, required double chartViewWidth}) {
+  List<Widget> _buildChartContent({required double chartViewWidth}) {
     List<Widget> chartContent = [];
 
-    final tasks = [...project.tasks];
+    final tasks = [...project!.tasks];
     tasks.sort((a, b) {
       return a.startTime.millisecondsSinceEpoch -
           b.startTime.millisecondsSinceEpoch;
     });
 
-    chartContent.add(buildChartForEachUser(
-        project, tasks, chartViewWidth, User(id: '-1', name: 'Toustes')));
+    chartContent.add(_buildChartForEachUser(
+        tasks, chartViewWidth, User(id: '-1', name: 'Toustes')));
 
-    for (final user in project.users) {
+    for (final user in project!.users) {
       List<Task> projectsOfUser = [];
 
       projectsOfUser = tasks
@@ -234,49 +239,70 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
           .toList();
 
       if (projectsOfUser.isNotEmpty) {
-        chartContent.add(buildChartForEachUser(
-            project, projectsOfUser, chartViewWidth, user));
+        chartContent
+            .add(_buildChartForEachUser(projectsOfUser, chartViewWidth, user));
       }
     }
 
     return chartContent;
   }
 
-  void onClickZoom(Project project, bool zoomIn) {
-    zoomIn ? currentTimeIncrement-- : currentTimeIncrement++;
+  void _onClickZoom(bool isZoomingIn) {
+    isZoomingIn ? currentTimeIncrement-- : currentTimeIncrement++;
     if (currentTimeIncrement < 0) currentTimeIncrement = 0;
     if (currentTimeIncrement >= possibleTimeIncrements.length) {
       currentTimeIncrement = possibleTimeIncrements.length - 1;
     }
     timeIncrements = possibleTimeIncrements[currentTimeIncrement];
-    viewRange = calculateNumberOfMinutesBetween(
-        project.startingTime, project.endingTime);
+    viewRange = _calculateNumberOfMinutesBetween(
+        project!.startingTime, project!.endingTime);
+    setState(() {});
+  }
+
+  void _onClickAddTask(BuildContext context) async {
+    final task = await showDialog<Task>(
+        context: context,
+        builder: (context) {
+          return TaskManager(project: project!);
+        });
+
+    if (task == null) return;
+
+    project!.tasks.add(task);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    final jsonPath = (ModalRoute.of(context)?.settings.arguments ??
-        'assets/scenario_5_lin.json') as String;
-
-    final project = Project.fromJson(jsonPath);
-    _initializeLate(project);
-
-    return Scaffold(
-        appBar: AppBar(actions: [
-          IconButton(
-              icon: const Icon(Icons.zoom_out),
-              onPressed: () => onClickZoom(project, false)),
-          IconButton(
-              icon: const Icon(Icons.zoom_in),
-              onPressed: () => onClickZoom(project, true)),
-        ]),
-        body: ListView(
-          children: buildChartContent(
-            project: project,
-            chartViewWidth: 3000,
-          ),
-        ),
-        drawer: MyDrawer(project: project));
+    return project == null  // This is true for a single frame
+        ? Container()
+        : Scaffold(
+            appBar: AppBar(actions: [
+              IconButton(
+                icon: const Icon(Icons.zoom_out),
+                onPressed:
+                    currentTimeIncrement == possibleTimeIncrements.length - 1
+                        ? null
+                        : () => _onClickZoom(false),
+                iconSize: 40,
+              ),
+              IconButton(
+                icon: const Icon(Icons.zoom_in),
+                onPressed:
+                    currentTimeIncrement == 0 ? null : () => _onClickZoom(true),
+                iconSize: 40,
+              ),
+              IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: () => _onClickAddTask(context),
+                iconSize: 40,
+              ),
+            ]),
+            body: ListView(
+              children: _buildChartContent(
+                chartViewWidth: 3000,
+              ),
+            ),
+            drawer: MyDrawer(project: project!));
   }
 }

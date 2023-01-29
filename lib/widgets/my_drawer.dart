@@ -24,11 +24,11 @@ class MyDrawer extends StatelessWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Nom du fichier'),
+            title: const Text('Inscrire le nom du fichier à enregistrer'),
             content: TextField(
               controller: textFieldController,
               decoration:
-                  const InputDecoration(hintText: "Text Field in Dialog"),
+                  const InputDecoration(labelText: 'Nom du fichier'),
             ),
             actions: <Widget>[
               TextButton(
