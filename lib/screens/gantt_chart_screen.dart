@@ -85,38 +85,41 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
       var remainingWidth =
           _calculateRemainingWidth(data[i].startTime, data[i].endTime);
       if (remainingWidth > 0) {
-        chartBars.add(GestureDetector(
-          onTap: () => _onClickModifyTask(data[i]),
-          child: Container(
-            decoration: BoxDecoration(
-                color: data[i].color.withAlpha(100),
-                borderRadius: BorderRadius.circular(10.0)),
-            height: 25.0,
-            width: remainingWidth * chartViewWidth / viewRangeToFitScreen,
-            margin: EdgeInsets.only(
-                left: _calculateDistanceToLeftBorder(data[i].startTime) *
-                    chartViewWidth /
-                    viewRangeToFitScreen,
-                top: i == 0 ? 4.0 : 2.0,
-                bottom: i == data.length - 1 ? 4.0 : 2.0),
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: '${data[i].name}\n'
-                  'Période : ${data[i].startTime.hour}:${data[i].startTime.minute} -> '
-                  '${data[i].endTime.hour}:${data[i].endTime.minute}\n'
-                  'Participants : ${data[i].participants}',
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Text(
-                  data[i].name,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 10.0),
+        chartBars.add(
+          GestureDetector(
+            onTap: () => _onClickModifyTask(data[i]),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: data[i].color,
+                  borderRadius: BorderRadius.circular(10.0)),
+              height: 25.0,
+              width: remainingWidth * chartViewWidth / viewRangeToFitScreen,
+              margin: EdgeInsets.only(
+                  left: _calculateDistanceToLeftBorder(data[i].startTime) *
+                      chartViewWidth /
+                      viewRangeToFitScreen,
+                  top: i == 0 ? 4.0 : 2.0,
+                  bottom: i == data.length - 1 ? 4.0 : 2.0),
+              alignment: Alignment.centerLeft,
+              child: Tooltip(
+                message: '${data[i].name}\n'
+                    'Période : ${data[i].startTime.hour}:${data[i].startTime.minute} -> '
+                    '${data[i].endTime.hour}:${data[i].endTime.minute}\n'
+                    'Participants : ${data[i].participants}',
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    data[i].name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: 10.0, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),
           ),
-        ));
+        );
       }
     }
 
