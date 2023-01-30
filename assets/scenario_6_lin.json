@@ -133,7 +133,7 @@
             "name": "2 et 3",
             "startTime": [1, 1, 1, 20, 0],
             "endTime": [1, 1, 1, 20, 15],
-            "participants": ["2", "2"],
+            "participants": ["2", "3"],
             "color": 4283215696
         },
         {

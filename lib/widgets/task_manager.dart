@@ -5,9 +5,11 @@ import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import '/models/project.dart';
 
 class TaskManager extends StatefulWidget {
-  const TaskManager({Key? key, required this.project}) : super(key: key);
+  const TaskManager({Key? key, required this.project, this.taskIndex})
+      : super(key: key);
 
   final Project project;
+  final int? taskIndex;
 
   @override
   State<TaskManager> createState() => _TaskManagerState();
@@ -19,6 +21,23 @@ class _TaskManagerState extends State<TaskManager> {
   late DateTime _endTime = widget.project.endingTime;
   final List<String> _participants = [];
   Color _color = Colors.black;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.taskIndex != null) {
+      final defaultTask = widget.project.tasks[widget.taskIndex!];
+      _taskName = defaultTask.name;
+      _startTime = defaultTask.startTime;
+      _endTime = defaultTask.endTime;
+
+      for (final id in defaultTask.participants) {
+        _participants.add(id);
+      }
+      _color = defaultTask.color;
+    }
+  }
 
   void _clickToggleParticipant(String id) {
     if (_participants.contains(id)) {
@@ -38,7 +57,8 @@ class _TaskManagerState extends State<TaskManager> {
           children: [
             const Text('Ajouter une nouvelle tâche',
                 style: TextStyle(fontSize: 20)),
-            TextField(
+            TextFormField(
+              initialValue: _taskName,
               onChanged: (value) {
                 _taskName = value;
                 setState(() {});
@@ -54,7 +74,7 @@ class _TaskManagerState extends State<TaskManager> {
                 SizedBox(
                   width: 300,
                   child: CalendarDatePicker(
-                    initialDate: widget.project.startingTime,
+                    initialDate: _startTime,
                     firstDate: widget.project.startingTime,
                     lastDate: widget.project.endingTime,
                     onDateChanged: (DateTime value) => _startTime = DateTime(
@@ -68,7 +88,7 @@ class _TaskManagerState extends State<TaskManager> {
                 ),
                 const VerticalDivider(),
                 TimePickerSpinner(
-                  time: widget.project.startingTime,
+                  time: _startTime,
                   minutesInterval: 5,
                   onTimeChange: (time) => _startTime = DateTime(
                     _startTime.year,
@@ -89,7 +109,7 @@ class _TaskManagerState extends State<TaskManager> {
                 SizedBox(
                   width: 300,
                   child: CalendarDatePicker(
-                    initialDate: widget.project.endingTime,
+                    initialDate: _endTime,
                     firstDate: widget.project.startingTime,
                     lastDate: widget.project.endingTime,
                     onDateChanged: (DateTime value) => _endTime = DateTime(
@@ -103,7 +123,7 @@ class _TaskManagerState extends State<TaskManager> {
                 ),
                 const VerticalDivider(),
                 TimePickerSpinner(
-                  time: widget.project.endingTime,
+                  time: _endTime,
                   minutesInterval: 5,
                   onTimeChange: (time) => _endTime = DateTime(
                     _endTime.year,
@@ -139,6 +159,11 @@ class _TaskManagerState extends State<TaskManager> {
         ),
       ),
       actions: <Widget>[
+        if (widget.taskIndex != null)
+          TextButton(
+              child:
+                  const Text('Supprimer', style: TextStyle(color: Colors.red)),
+              onPressed: () => Navigator.pop(context, 'delete')),
         TextButton(
             child: const Text('Annuler'),
             onPressed: () => Navigator.pop(context)),

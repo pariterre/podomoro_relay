@@ -85,28 +85,34 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
       var remainingWidth =
           _calculateRemainingWidth(data[i].startTime, data[i].endTime);
       if (remainingWidth > 0) {
-        chartBars.add(Container(
-          decoration: BoxDecoration(
-              color: data[i].color.withAlpha(100),
-              borderRadius: BorderRadius.circular(10.0)),
-          height: 25.0,
-          width: remainingWidth * chartViewWidth / viewRangeToFitScreen,
-          margin: EdgeInsets.only(
-              left: _calculateDistanceToLeftBorder(data[i].startTime) *
-                  chartViewWidth /
-                  viewRangeToFitScreen,
-              top: i == 0 ? 4.0 : 2.0,
-              bottom: i == data.length - 1 ? 4.0 : 2.0),
-          alignment: Alignment.centerLeft,
-          child: Tooltip(
-            message: data[i].name,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                data[i].name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontSize: 10.0),
+        chartBars.add(GestureDetector(
+          onTap: () => _onClickModifyTask(data[i]),
+          child: Container(
+            decoration: BoxDecoration(
+                color: data[i].color.withAlpha(100),
+                borderRadius: BorderRadius.circular(10.0)),
+            height: 25.0,
+            width: remainingWidth * chartViewWidth / viewRangeToFitScreen,
+            margin: EdgeInsets.only(
+                left: _calculateDistanceToLeftBorder(data[i].startTime) *
+                    chartViewWidth /
+                    viewRangeToFitScreen,
+                top: i == 0 ? 4.0 : 2.0,
+                bottom: i == data.length - 1 ? 4.0 : 2.0),
+            alignment: Alignment.centerLeft,
+            child: Tooltip(
+              message: '${data[i].name}\n'
+                  'Période : ${data[i].startTime.hour}:${data[i].startTime.minute} -> '
+                  '${data[i].endTime.hour}:${data[i].endTime.minute}\n'
+                  'Participants : ${data[i].participants}',
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  data[i].name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(fontSize: 10.0),
+                ),
               ),
             ),
           ),
@@ -259,7 +265,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     setState(() {});
   }
 
-  void _onClickAddTask(BuildContext context) async {
+  void _onClickAddTask() async {
     final task = await showDialog<Task>(
         context: context,
         builder: (context) {
@@ -272,9 +278,50 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     setState(() {});
   }
 
+  void _onClickModifyTask(Task taskToModify) async {
+    final idx = project!.tasks.indexOf(taskToModify);
+
+    final modifiedTask = await showDialog(
+        context: context,
+        builder: (context) {
+          return TaskManager(project: project!, taskIndex: idx);
+        });
+
+    if (modifiedTask == null) return;
+
+    if (modifiedTask.runtimeType == String) {
+      if (modifiedTask == 'delete') {
+        final confirm = await showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Confirmer la suppression de la tâcher'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    child: const Text('Annuler'),
+                  ),
+                  TextButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: const Text('Confirmer')),
+                ],
+              );
+            });
+        if (confirm!) {
+          project!.tasks.removeAt(idx);
+          setState(() {});
+        }
+        return;
+      }
+    }
+
+    project!.tasks[idx] = modifiedTask;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return project == null  // This is true for a single frame
+    return project == null // This is true for a single frame
         ? Container()
         : Scaffold(
             appBar: AppBar(actions: [
@@ -294,7 +341,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
               ),
               IconButton(
                 icon: const Icon(Icons.add),
-                onPressed: () => _onClickAddTask(context),
+                onPressed: () => _onClickAddTask(),
                 iconSize: 40,
               ),
             ]),
