@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/services.dart';
+
 import 'task.dart';
 import 'users.dart';
 
@@ -20,8 +22,8 @@ class Project {
     this.tasks = const [],
   });
 
-  static Project fromJson(String jsonPath) {
-    final data = File(jsonPath).readAsStringSync();
+  static Future<Project> fromJson(String jsonPath) async {
+    final data = await rootBundle.loadString(jsonPath);
     final jsonResult = jsonDecode(data);
 
     final s = jsonResult["startingTime"];

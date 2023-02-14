@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '/models/project.dart';
-import '/widgets/my_drawer.dart';
 import '/widgets/task_manager.dart';
 
 class GanttChartScreen extends StatefulWidget {
@@ -25,9 +24,10 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(Duration.zero, () {
-      project = Project.fromJson((ModalRoute.of(context)?.settings.arguments ??
-          'assets/scenario_5_lin.json') as String);
+    Future.delayed(Duration.zero, () async {
+      project = await Project.fromJson(
+          (ModalRoute.of(context)?.settings.arguments ??
+              'assets/pomodoro_schedule.json') as String);
       timeIncrements = possibleTimeIncrements[currentTimeIncrement];
       viewRange = _calculateNumberOfMinutesBetween(
           project!.startingTime, project!.endingTime);
@@ -113,7 +113,9 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                        fontSize: 10.0, fontWeight: FontWeight.bold),
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
               ),
@@ -353,6 +355,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
                 chartViewWidth: 3000,
               ),
             ),
-            drawer: MyDrawer(project: project!));
+            // drawer: MyDrawer(project: project!),
+          );
   }
 }
