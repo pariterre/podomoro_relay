@@ -158,6 +158,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 10.0,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ));
