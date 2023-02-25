@@ -12,6 +12,11 @@ class GanttChartScreen extends StatefulWidget {
   State<GanttChartScreen> createState() => _GanttChartScreenState();
 }
 
+enum TimeZone {
+  europe,
+  quebec,
+}
+
 class _GanttChartScreenState extends State<GanttChartScreen> {
   Project? project;
   List<int> possibleTimeIncrements = [5, 10, 15, 30, 60];
@@ -19,6 +24,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
   late int timeIncrements;
   late double viewRange;
   int viewRangeToFitScreen = 60;
+  TimeZone currentTimeZone = TimeZone.quebec;
 
   @override
   void initState() {
@@ -143,11 +149,12 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     ));
 
     DateTime tempDate = project!.startingTime;
+    int timeZoneOffset = currentTimeZone == TimeZone.quebec ? 0 : 6;
     for (int i = 0; i < viewRange; i++) {
       headerItems.add(SizedBox(
         width: chartViewWidth / viewRangeToFitScreen,
         child: Text(
-          '${tempDate.hour}:${tempDate.minute != 0 ? tempDate.minute : '00'}',
+          '${tempDate.hour + timeZoneOffset}:${tempDate.minute != 0 ? tempDate.minute : '00'}',
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 10.0,
@@ -330,6 +337,13 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
         ? Container()
         : Scaffold(
             appBar: AppBar(actions: [
+              IconButton(
+                  onPressed: () => setState(() {
+                        currentTimeZone = currentTimeZone == TimeZone.quebec
+                            ? TimeZone.europe
+                            : TimeZone.quebec;
+                      }),
+                  icon: Text(currentTimeZone == TimeZone.quebec ? 'Qc' : 'Fr')),
               IconButton(
                 icon: const Icon(Icons.zoom_out),
                 onPressed:
