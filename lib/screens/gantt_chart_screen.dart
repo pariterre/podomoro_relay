@@ -154,7 +154,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
       headerItems.add(SizedBox(
         width: chartViewWidth / viewRangeToFitScreen,
         child: Text(
-          '${tempDate.hour + timeZoneOffset}:${tempDate.minute != 0 ? tempDate.minute : '00'}',
+          '${(tempDate.hour + timeZoneOffset) % 24}:${tempDate.minute != 0 ? tempDate.minute : '00'}',
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 10.0,

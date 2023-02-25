@@ -27,15 +27,15 @@
         "id":"3"
       },
       {
-        "name":"AlchmistedesMots",
+        "name":"AlchimistedesMots",
         "id":"4"
       },
       {
-        "name":"Charlienounouvember",
+        "name":"Helene_Ducrocq",
         "id":"5"
       },
       {
-        "name":"Helene_Ducrocq",
+        "name":"Charlienounouvember",
         "id":"6"
       }
     ],
@@ -134,7 +134,7 @@
         "id":"o55BP8Mw5yQ1q8VRrmniZ"
       },
       {
-        "name":"Présentation AlchmistedesMots",
+        "name":"Présentation AlchimistedesMots",
         "startTime":[
           1,
           1,
@@ -156,7 +156,7 @@
         "id":"ZQtuziW0xRWfrkmonr0Na"
       },
       {
-        "name":"Présentation Charlienounouvember",
+        "name":"Présentation Helene_Ducrocq",
         "startTime":[
           1,
           1,
@@ -178,7 +178,7 @@
         "id":"hIK10mFVYx1-EMsNwK9_6"
       },
       {
-        "name":"Présentation Helene_Ducrocq",
+        "name":"Présentation Charlienounouvember",
         "startTime":[
           1,
           1,
@@ -380,7 +380,7 @@
         "id":"Mt-MED_O3a14YvkLPVDuW"
       },
       {
-        "name":"Discussion Pariterre et AlchmistedesMots",
+        "name":"Discussion Pariterre et AlchimistedesMots",
         "startTime":[
           1,
           1,
@@ -425,7 +425,7 @@
         "id":"raA0vazNjGbSToCzawXzI"
       },
       {
-        "name":"Pomodoro AlchmistedesMots",
+        "name":"Pomodoro AlchimistedesMots",
         "startTime":[
           1,
           1,
@@ -437,7 +437,7 @@
           1,
           1,
           2,
-          7,
+          6,
           0
         ],
         "participants":[
@@ -447,19 +447,19 @@
         "id":"hm5gxsHjZC4wGQHOhQzaY"
       },
       {
-        "name":"Discussion Pariterre, AlchmistedesMots et Charlienounouvember",
+        "name":"Discussion Pariterre, AlchimistedesMots et Helene_Ducrocq",
         "startTime":[
           1,
           1,
           2,
-          7,
+          6,
           0
         ],
         "endTime":[
           1,
           1,
           2,
-          7,
+          6,
           15
         ],
         "participants":[
@@ -471,19 +471,19 @@
         "id":"icyGKafx_HQ18eHbjPgsj"
       },
       {
-        "name":"Discussion Pariterre et AlchmistedesMots",
+        "name":"Discussion Pariterre et AlchimistedesMots",
         "startTime":[
           1,
           1,
           2,
-          7,
+          6,
           15
         ],
         "endTime":[
           1,
           1,
           2,
-          7,
+          6,
           25
         ],
         "participants":[
@@ -494,19 +494,19 @@
         "id":"NAizXRa60FD-pltgUhNrv"
       },
       {
-        "name":"Pomodoro Charlienounouvember",
+        "name":"Pomodoro Helene_Ducrocq",
         "startTime":[
           1,
           1,
           2,
-          7,
+          6,
           25
         ],
         "endTime":[
           1,
           1,
           2,
-          10,
+          9,
           30
         ],
         "participants":[
@@ -516,19 +516,19 @@
         "id":"tTaHdZLQO2h6mDonZy0g7"
       },
       {
-        "name":"Discussion Pariterre, Charlienounouvember et Helene_Ducrocq",
+        "name":"Discussion Pariterre, Helene_Ducrocq et Charlienounouvember",
         "startTime":[
           1,
           1,
           2,
-          10,
+          9,
           30
         ],
         "endTime":[
           1,
           1,
           2,
-          10,
+          9,
           45
         ],
         "participants":[
@@ -540,19 +540,19 @@
         "id":"uX0fqMa-Bt8i-BTZhJ4ws"
       },
       {
-        "name":"Discussion Pariterre et Charlienounouvember",
+        "name":"Discussion Pariterre et Helene_Ducrocq",
         "startTime":[
           1,
           1,
           2,
-          10,
+          9,
           45
         ],
         "endTime":[
           1,
           1,
           2,
-          10,
+          9,
           55
         ],
         "participants":[
@@ -563,12 +563,12 @@
         "id":"R6p_9pPwO3FprRU42Ttxx"
       },
       {
-        "name":"Pomodoro Helene_Ducrocq",
+        "name":"Pomodoro Charlienounouvember",
         "startTime":[
           1,
           1,
           2,
-          10,
+          9,
           55
         ],
         "endTime":[
