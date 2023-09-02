@@ -15,12 +15,13 @@ class Project {
   final List<User> users;
   final List<Task> tasks;
 
-  const Project({
-    required this.startingTime,
-    required this.endingTime,
+  Project({
+    DateTime? startingTime,
+    DateTime? endingTime,
     this.users = const [],
     this.tasks = const [],
-  });
+  })  : startingTime = startingTime ?? DateTime.now(),
+        endingTime = endingTime ?? DateTime.now().add(const Duration(days: 1));
 
   static Future<Project> fromJson(String jsonPath) async {
     final data = await rootBundle.loadString(jsonPath);

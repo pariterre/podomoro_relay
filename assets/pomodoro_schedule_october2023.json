@@ -10,32 +10,32 @@
       1,
       1,
       2,
-      23,
+      14,
       0
     ],
     "users":[
       {
-        "name":"Lizemeyers",
+        "name":"Streamer1",
         "id":"1"
       },
       {
-        "name":"Le_Sketch",
+        "name":"Streamer2",
         "id":"2"
       },
       {
-        "name":"Pariterre",
+        "name":"Streamer3",
         "id":"3"
       },
       {
-        "name":"Charlienounouvember",
+        "name":"Streamer4",
         "id":"4"
       },
       {
-        "name":"AlchmistedesMots",
+        "name":"Streamer5",
         "id":"5"
       },
       {
-        "name":"Helene_Ducrocq",
+        "name":"Streamer6",
         "id":"6"
       }
     ],
@@ -68,7 +68,7 @@
         "id":"taKWPPO58p9JlhYqYxtRA"
       },
       {
-        "name":"Présentation Lizemeyers",
+        "name":"Présentation Streamer1",
         "startTime":[
           1,
           1,
@@ -90,7 +90,7 @@
         "id":"Iw8GxBHmXnLbzz3PxFwfr"
       },
       {
-        "name":"Présentation Le_Sketch",
+        "name":"Présentation Streamer2",
         "startTime":[
           1,
           1,
@@ -112,7 +112,7 @@
         "id":"PfPPRaAj7BYybgnbQvQtL"
       },
       {
-        "name":"Présentation Pariterre",
+        "name":"Présentation Streamer3",
         "startTime":[
           1,
           1,
@@ -134,7 +134,7 @@
         "id":"o55BP8Mw5yQ1q8VRrmniZ"
       },
       {
-        "name":"Présentation Charlienounouvember",
+        "name":"Présentation Streamer4",
         "startTime":[
           1,
           1,
@@ -156,7 +156,7 @@
         "id":"ZQtuziW0xRWfrkmonr0Na"
       },
       {
-        "name":"Présentation AlchmistedesMots",
+        "name":"Présentation Streamer5",
         "startTime":[
           1,
           1,
@@ -178,7 +178,7 @@
         "id":"hIK10mFVYx1-EMsNwK9_6"
       },
       {
-        "name":"Présentation Helene_Ducrocq",
+        "name":"Présentation Streamer6",
         "startTime":[
           1,
           1,
@@ -222,7 +222,7 @@
         "id":"BWMUcV3k2Ka36UPi9a3Sw"
       },
       {
-        "name":"Pomodoro Lizemeyers",
+        "name":"Pomodoro Streamer1",
         "startTime":[
           1,
           1,
@@ -244,29 +244,7 @@
         "id":"2XXJyQpi0KAv2I-eQuqev"
       },
       {
-        "name":"Connexion Le_Sketch",
-        "startTime":[
-          1,
-          1,
-          1,
-          16,
-          25
-        ],
-        "endTime":[
-          1,
-          1,
-          1,
-          16,
-          30
-        ],
-        "participants":[
-          "2"
-        ],
-        "color":4294940672,
-        "id":"UzmPAfpFzUaeoDPJepQtM"
-      },
-      {
-        "name":"Discussion Lizemeyers et Le_Sketch",
+        "name":"Discussion Streamer3, Streamer1 et Streamer2",
         "startTime":[
           1,
           1,
@@ -282,6 +260,7 @@
           45
         ],
         "participants":[
+          "3",
           "1",
           "2"
         ],
@@ -289,29 +268,7 @@
         "id":"fLOo7QCtXUStbhUEiWYVU"
       },
       {
-        "name":"Connexion Charlienounouvember",
-        "startTime":[
-          1,
-          1,
-          1,
-          16,
-          40
-        ],
-        "endTime":[
-          1,
-          1,
-          1,
-          16,
-          45
-        ],
-        "participants":[
-          "4"
-        ],
-        "color":4294940672,
-        "id":"1Jm08twUj25cMVC-xhU-J"
-      },
-      {
-        "name":"Discussion Le_Sketch et Charlienounouvember",
+        "name":"Discussion Streamer3 et Streamer1",
         "startTime":[
           1,
           1,
@@ -327,14 +284,14 @@
           55
         ],
         "participants":[
-          "2",
-          "4"
+          "3",
+          "1"
         ],
         "color":4283215696,
         "id":"gCSQ7odyy5OMOTj7wHUoo"
       },
       {
-        "name":"Pomodoro Le_Sketch",
+        "name":"Pomodoro Streamer2",
         "startTime":[
           1,
           1,
@@ -356,29 +313,7 @@
         "id":"2FEFaLpB01PZwDpgn4pTb"
       },
       {
-        "name":"Connexion Pariterre",
-        "startTime":[
-          1,
-          1,
-          1,
-          20,
-          55
-        ],
-        "endTime":[
-          1,
-          1,
-          1,
-          21,
-          0
-        ],
-        "participants":[
-          "3"
-        ],
-        "color":4294940672,
-        "id":"qd-bZgkPKwu47-smCb7UO"
-      },
-      {
-        "name":"Discussion Le_Sketch et Pariterre",
+        "name":"Discussion Streamer2 et Streamer3",
         "startTime":[
           1,
           1,
@@ -401,29 +336,7 @@
         "id":"YTtiUCsSU75b9saoaGu44"
       },
       {
-        "name":"Connexion Lizemeyers",
-        "startTime":[
-          1,
-          1,
-          1,
-          21,
-          10
-        ],
-        "endTime":[
-          1,
-          1,
-          1,
-          21,
-          15
-        ],
-        "participants":[
-          "1"
-        ],
-        "color":4294940672,
-        "id":"iPYRUUratqqA3aznDgnN9"
-      },
-      {
-        "name":"Discussion Pariterre et Lizemeyers",
+        "name":"Streamer3 seul",
         "startTime":[
           1,
           1,
@@ -439,14 +352,13 @@
           25
         ],
         "participants":[
-          "3",
-          "1"
+          "3"
         ],
         "color":4283215696,
         "id":"kajcNojGfC_QmB27GCSWs"
       },
       {
-        "name":"Pomodoro Pariterre",
+        "name":"Pomodoro Streamer3",
         "startTime":[
           1,
           1,
@@ -468,29 +380,7 @@
         "id":"Mt-MED_O3a14YvkLPVDuW"
       },
       {
-        "name":"Connexion Charlienounouvember",
-        "startTime":[
-          1,
-          1,
-          2,
-          2,
-          25
-        ],
-        "endTime":[
-          1,
-          1,
-          2,
-          2,
-          30
-        ],
-        "participants":[
-          "4"
-        ],
-        "color":4294940672,
-        "id":"FjBzJC5bImJrNSjCaPPZM"
-      },
-      {
-        "name":"Discussion Pariterre et Charlienounouvember",
+        "name":"Discussion Streamer3 et Streamer4",
         "startTime":[
           1,
           1,
@@ -513,29 +403,7 @@
         "id":"qoFqoD8l2qwahHqRQoN9R"
       },
       {
-        "name":"Connexion Helene_Ducrocq",
-        "startTime":[
-          1,
-          1,
-          2,
-          2,
-          40
-        ],
-        "endTime":[
-          1,
-          1,
-          2,
-          2,
-          45
-        ],
-        "participants":[
-          "6"
-        ],
-        "color":4294940672,
-        "id":"oFDnrRcEBljyoMp0kgfpc"
-      },
-      {
-        "name":"Discussion Charlienounouvember et Helene_Ducrocq",
+        "name":"Streamer3 seul",
         "startTime":[
           1,
           1,
@@ -551,14 +419,13 @@
           55
         ],
         "participants":[
-          "4",
-          "6"
+          "3"
         ],
         "color":4283215696,
         "id":"raA0vazNjGbSToCzawXzI"
       },
       {
-        "name":"Pomodoro Charlienounouvember",
+        "name":"Pomodoro Streamer4",
         "startTime":[
           1,
           1,
@@ -570,7 +437,7 @@
           1,
           1,
           2,
-          7,
+          6,
           0
         ],
         "participants":[
@@ -580,44 +447,23 @@
         "id":"hm5gxsHjZC4wGQHOhQzaY"
       },
       {
-        "name":"Connexion AlchmistedesMots",
+        "name":"Discussion Streamer3, Streamer4 et Streamer5",
         "startTime":[
           1,
           1,
           2,
           6,
-          55
-        ],
-        "endTime":[
-          1,
-          1,
-          2,
-          7,
-          0
-        ],
-        "participants":[
-          "5"
-        ],
-        "color":4294940672,
-        "id":"wCY8jLfv_xrimg1Dnekea"
-      },
-      {
-        "name":"Discussion Charlienounouvember et AlchmistedesMots",
-        "startTime":[
-          1,
-          1,
-          2,
-          7,
           0
         ],
         "endTime":[
           1,
           1,
           2,
-          7,
+          6,
           15
         ],
         "participants":[
+          "3",
           "4",
           "5"
         ],
@@ -625,64 +471,42 @@
         "id":"icyGKafx_HQ18eHbjPgsj"
       },
       {
-        "name":"Connexion Pariterre",
+        "name":"Discussion Streamer3 et Streamer4",
         "startTime":[
           1,
           1,
           2,
-          7,
-          10
-        ],
-        "endTime":[
-          1,
-          1,
-          2,
-          7,
-          15
-        ],
-        "participants":[
-          "3"
-        ],
-        "color":4294940672,
-        "id":"PkPJiNAJMfHcdT3lWKwEZ"
-      },
-      {
-        "name":"Discussion AlchmistedesMots et Pariterre",
-        "startTime":[
-          1,
-          1,
-          2,
-          7,
+          6,
           15
         ],
         "endTime":[
           1,
           1,
           2,
-          7,
+          6,
           25
         ],
         "participants":[
-          "5",
-          "3"
+          "3",
+          "4"
         ],
         "color":4283215696,
         "id":"NAizXRa60FD-pltgUhNrv"
       },
       {
-        "name":"Pomodoro AlchmistedesMots",
+        "name":"Pomodoro Streamer5",
         "startTime":[
           1,
           1,
           2,
-          7,
+          6,
           25
         ],
         "endTime":[
           1,
           1,
           2,
-          10,
+          9,
           30
         ],
         "participants":[
@@ -692,44 +516,23 @@
         "id":"tTaHdZLQO2h6mDonZy0g7"
       },
       {
-        "name":"Connexion Helene_Ducrocq",
+        "name":"Discussion Streamer3, Streamer5 et Streamer6",
         "startTime":[
           1,
           1,
           2,
-          10,
-          25
-        ],
-        "endTime":[
-          1,
-          1,
-          2,
-          10,
-          30
-        ],
-        "participants":[
-          "6"
-        ],
-        "color":4294940672,
-        "id":"4QQXXWh8qRyoQ5e--HksF"
-      },
-      {
-        "name":"Discussion AlchmistedesMots et Helene_Ducrocq",
-        "startTime":[
-          1,
-          1,
-          2,
-          10,
+          9,
           30
         ],
         "endTime":[
           1,
           1,
           2,
-          10,
+          9,
           45
         ],
         "participants":[
+          "3",
           "5",
           "6"
         ],
@@ -737,57 +540,35 @@
         "id":"uX0fqMa-Bt8i-BTZhJ4ws"
       },
       {
-        "name":"Connexion Le_Sketch",
+        "name":"Discussion Streamer3 et Streamer5",
         "startTime":[
           1,
           1,
           2,
-          10,
-          40
-        ],
-        "endTime":[
-          1,
-          1,
-          2,
-          10,
-          45
-        ],
-        "participants":[
-          "2"
-        ],
-        "color":4294940672,
-        "id":"VFFt-FBJsMF1uEZbaQZ_b"
-      },
-      {
-        "name":"Discussion Helene_Ducrocq et Le_Sketch",
-        "startTime":[
-          1,
-          1,
-          2,
-          10,
+          9,
           45
         ],
         "endTime":[
           1,
           1,
           2,
-          10,
+          9,
           55
         ],
         "participants":[
-          "6",
-          "2"
+          "3",
+          "5"
         ],
         "color":4283215696,
         "id":"R6p_9pPwO3FprRU42Ttxx"
       },
       {
-        "name":"Pomodoro Helene_Ducrocq",
+        "name":"Pomodoro Streamer6",
         "startTime":[
           1,
           1,
           2,
-          10,
+          9,
           55
         ],
         "endTime":[
@@ -802,33 +583,6 @@
         ],
         "color":4288423856,
         "id":"TCgxkAbmdcE2XgD7sP05C"
-      },
-      {
-        "name":"Connexion Tous",
-        "startTime":[
-          1,
-          1,
-          2,
-          12,
-          55
-        ],
-        "endTime":[
-          1,
-          1,
-          2,
-          13,
-          0
-        ],
-        "participants":[
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6"
-        ],
-        "color":4294940672,
-        "id":"8wTXeRjC7DvGK52Ra_9D_"
       },
       {
         "name":"FIN!",

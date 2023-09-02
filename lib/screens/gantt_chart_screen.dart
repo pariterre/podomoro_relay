@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pomodoro_relay/widgets/my_drawer.dart';
 
 import '/models/project.dart';
 import '/widgets/task_manager.dart';
@@ -31,9 +32,8 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     super.initState();
 
     Future.delayed(Duration.zero, () async {
-      project = await Project.fromJson(
-          (ModalRoute.of(context)?.settings.arguments ??
-              'assets/pomodoro_schedule.json') as String);
+      final path = ModalRoute.of(context)!.settings.arguments as String?;
+      project = path == null ? Project() : await Project.fromJson(path);
       timeIncrements = possibleTimeIncrements[currentTimeIncrement];
       viewRange = _calculateNumberOfMinutesBetween(
           project!.startingTime, project!.endingTime);
@@ -300,7 +300,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
           return TaskManager(project: project!, taskIndex: idx);
         });
 
-    if (modifiedTask == null) return;
+    if (modifiedTask == null || !mounted) return;
 
     if (modifiedTask.runtimeType == String) {
       if (modifiedTask == 'delete') {
@@ -308,7 +308,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: const Text('Confirmer la suppression de la tâcher'),
+                title: const Text('Confirmer la suppression de la tâche'),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.pop(context, false),
@@ -370,7 +370,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
                 chartViewWidth: 3000,
               ),
             ),
-            // drawer: MyDrawer(project: project!),
+            drawer: MyDrawer(project: project!),
           );
   }
 }
