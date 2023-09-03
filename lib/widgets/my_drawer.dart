@@ -1,5 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:universal_html/html.dart' as html;
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '/models/project.dart';
@@ -10,68 +15,93 @@ class MyDrawer extends StatelessWidget {
 
   final Project project;
 
-  void _loadJson(BuildContext context, path) {
-    Navigator.of(context)
-        .pushReplacementNamed(GanttChartScreen.route, arguments: path);
-  }
-
-  Future<void> _save(BuildContext context) async {
-    final messenger = ScaffoldMessenger.of(context);
+  Future<void> _newFile(BuildContext context) async {
     final navigator = Navigator.of(context);
-
-    TextEditingController textFieldController = TextEditingController();
-    final filename = await showDialog<String>(
+    final shouldCreateNewFile = await showDialog<bool?>(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Inscrire le nom du fichier à enregistrer'),
-            content: TextField(
-              controller: textFieldController,
-              decoration:
-                  const InputDecoration(labelText: 'Nom du fichier'),
-            ),
-            actions: <Widget>[
+            title: const Text('Êtes vous certain?'),
+            actions: [
               TextButton(
-                  child: const Text('Annuler'),
-                  onPressed: () => Navigator.pop(context)),
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text('Annuler')),
               TextButton(
-                  child: const Text('Valider'),
-                  onPressed: () {
-                    Navigator.pop(context, textFieldController.text);
-                  }),
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: const Text('Confirmer'))
             ],
           );
         });
+    if (shouldCreateNewFile == null || !shouldCreateNewFile) return;
 
+    navigator.pushNamed(GanttChartScreen.route);
+  }
+
+  Future<void> _load(BuildContext context) async {
+    final navigator = Navigator.of(context);
+
+    final filename = await FilePicker.platform.pickFiles(
+        allowMultiple: false,
+        allowedExtensions: ['json'],
+        type: FileType.custom);
     if (filename == null) return;
 
-    final files = Directory('assets/').listSync();
-    for (final file in files) {
-      final previousFilenames = file.path.split("/").last.split(".").first;
-      if (filename == previousFilenames) {
-        navigator.pop();
-        messenger.showSnackBar(const SnackBar(
-          content: Text('Nom de fichier déjà utilisé'),
-        ));
-        return;
-      }
+    final serializedData =
+        String.fromCharCodes(filename.files.last.bytes!.toList());
+
+    navigator.pushReplacementNamed(GanttChartScreen.route,
+        arguments: serializedData);
+  }
+
+  Future<void> _save(BuildContext context) async {
+    final navigator = Navigator.of(context);
+
+    final map = project.serialize();
+    JsonEncoder encoder = const JsonEncoder.withIndent('  ');
+    String json = encoder.convert(map);
+
+    if (kIsWeb) {
+      // prepare
+      final bytes = utf8.encode(json);
+      final blob = html.Blob([bytes]);
+      final url = html.Url.createObjectUrlFromBlob(blob);
+      final anchor = html.document.createElement('a') as html.AnchorElement
+        ..href = url
+        ..download = 'mon_projet.json';
+      html.document.body!.children.add(anchor);
+
+      // download
+      anchor.click();
+
+      // cleanup
+      html.document.body!.children.remove(anchor);
+      html.Url.revokeObjectUrl(url);
+    } else {
+      String? filename = await FilePicker.platform.saveFile(
+          //allowMultiple: false,
+          allowedExtensions: ['json'],
+          type: FileType.custom);
+      if (filename == null) return;
+
+      if (!RegExp(r'^.*\.json$').hasMatch(filename)) filename += '.json';
+      final file = File(filename);
+      file.writeAsStringSync(json);
     }
 
-    project.toJson('assets/$filename.json');
     navigator.pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    final files = Directory('assets/').listSync();
-    final List<Widget> scenarios = [];
-    for (final file in files) {
-      final filename = file.path.split("/").last.split(".").first;
-      scenarios.add(ListTile(
-        title: Text(filename),
-        onTap: () => _loadJson(context, file.path),
-      ));
-    }
+    final newFile = ListTile(
+      title: const Text('Nouveau fichier'),
+      onTap: () => _newFile(context),
+    );
+
+    final loadTile = ListTile(
+      title: const Text('Charger'),
+      onTap: () => _load(context),
+    );
 
     final saveTile = ListTile(
       title: const Text('Sauvegarder'),
@@ -80,8 +110,8 @@ class MyDrawer extends StatelessWidget {
 
     return Drawer(
         child: ListView(children: [
-      ...scenarios,
-      const Divider(),
+      newFile,
+      loadTile,
       saveTile,
     ]));
   }

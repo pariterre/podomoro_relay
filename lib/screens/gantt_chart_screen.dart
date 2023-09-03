@@ -37,7 +37,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     Future.delayed(Duration.zero, () async {
       final path = ModalRoute.of(context)!.settings.arguments as String?;
       if (path == null) return;
-      _loadProject(await Project.fromJson(path));
+      _loadProject(await Project.fromSerialized(path));
     });
   }
 
@@ -207,37 +207,38 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
         scrollDirection: Axis.horizontal,
         children: [
           Stack(fit: StackFit.loose, children: <Widget>[
-            _buildGrid(chartViewWidth),
+            if (chartBars.isNotEmpty) _buildGrid(chartViewWidth),
             _buildHeader(chartViewWidth, Colors.blue),
-            Container(
-                margin: const EdgeInsets.only(top: 25.0),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                            width: chartViewWidth / viewRangeToFitScreen,
-                            height: chartBars.length * 29.0 + 4.0,
-                            color: Colors.blue.withAlpha(100),
-                            child: Center(
-                              child: RotatedBox(
-                                quarterTurns: -45,
-                                child: Text(
-                                  user.name,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
+            if (chartBars.isNotEmpty)
+              Container(
+                  margin: const EdgeInsets.only(top: 25.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                              width: chartViewWidth / viewRangeToFitScreen,
+                              height: chartBars.length * 29.0 + 4.0,
+                              color: Colors.blue.withAlpha(100),
+                              child: Center(
+                                child: RotatedBox(
+                                  quarterTurns: -45,
+                                  child: Text(
+                                    user.name,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                              ),
-                            )),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: chartBars,
-                        ),
-                      ],
-                    ),
-                  ],
-                )),
+                              )),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: chartBars,
+                          ),
+                        ],
+                      ),
+                    ],
+                  )),
           ]),
         ],
       ),

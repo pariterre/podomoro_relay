@@ -1,7 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/services.dart';
 
 import 'task.dart';
 import 'users.dart';
@@ -25,8 +22,7 @@ class Project {
         users = users ?? [],
         tasks = tasks ?? [];
 
-  static Future<Project> fromJson(String jsonPath) async {
-    final data = await rootBundle.loadString(jsonPath);
+  static Future<Project> fromSerialized(String data) async {
     final jsonResult = jsonDecode(data);
 
     final s = jsonResult["startingTime"];
@@ -48,7 +44,7 @@ class Project {
     );
   }
 
-  void toJson(String jsonPath) {
+  Map<String, dynamic> serialize() {
     final map = {
       "startingTime": [
         startingTime.year,
@@ -67,10 +63,7 @@ class Project {
       "users": users.map<Map<String, dynamic>>((e) => e.serialize()).toList(),
       "tasks": tasks.map<Map<String, dynamic>>((e) => e.serialize()).toList(),
     };
-    JsonEncoder encoder = const JsonEncoder.withIndent('  ');
-    String json = encoder.convert(map);
 
-    final file = File(jsonPath);
-    file.writeAsStringSync(json);
+    return map;
   }
 }
