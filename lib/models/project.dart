@@ -10,18 +10,20 @@ export 'task.dart';
 export 'users.dart';
 
 class Project {
-  final DateTime startingTime;
-  final DateTime endingTime;
-  final List<User> users;
-  final List<Task> tasks;
+  DateTime startingTime;
+  DateTime endingTime;
+  List<User> users;
+  List<Task> tasks;
 
   Project({
     DateTime? startingTime,
     DateTime? endingTime,
-    this.users = const [],
-    this.tasks = const [],
+    List<User>? users,
+    List<Task>? tasks,
   })  : startingTime = startingTime ?? DateTime.now(),
-        endingTime = endingTime ?? DateTime.now().add(const Duration(days: 1));
+        endingTime = endingTime ?? DateTime.now().add(const Duration(days: 1)),
+        users = users ?? [],
+        tasks = tasks ?? [];
 
   static Future<Project> fromJson(String jsonPath) async {
     final data = await rootBundle.loadString(jsonPath);
@@ -65,9 +67,8 @@ class Project {
       "users": users.map<Map<String, dynamic>>((e) => e.serialize()).toList(),
       "tasks": tasks.map<Map<String, dynamic>>((e) => e.serialize()).toList(),
     };
-    String json = jsonEncode(
-      map,
-    );
+    JsonEncoder encoder = const JsonEncoder.withIndent('  ');
+    String json = encoder.convert(map);
 
     final file = File(jsonPath);
     file.writeAsStringSync(json);

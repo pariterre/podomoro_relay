@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
+import 'package:pomodoro_relay/widgets/manage_user_dialog.dart';
 import 'package:pomodoro_relay/widgets/my_drawer.dart';
 
 import '/models/project.dart';
@@ -19,11 +21,12 @@ enum TimeZone {
 }
 
 class _GanttChartScreenState extends State<GanttChartScreen> {
-  Project? project;
+  Project project = Project();
   List<int> possibleTimeIncrements = [5, 10, 15, 30, 60];
   int currentTimeIncrement = 2;
-  late int timeIncrements;
-  late double viewRange;
+  late int timeIncrements = possibleTimeIncrements[currentTimeIncrement];
+  late double viewRange = _calculateNumberOfMinutesBetween(
+      project.startingTime, project.endingTime);
   int viewRangeToFitScreen = 60;
   TimeZone currentTimeZone = TimeZone.quebec;
 
@@ -33,12 +36,16 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
 
     Future.delayed(Duration.zero, () async {
       final path = ModalRoute.of(context)!.settings.arguments as String?;
-      project = path == null ? Project() : await Project.fromJson(path);
-      timeIncrements = possibleTimeIncrements[currentTimeIncrement];
-      viewRange = _calculateNumberOfMinutesBetween(
-          project!.startingTime, project!.endingTime);
-      setState(() {});
+      if (path == null) return;
+      _loadProject(await Project.fromJson(path));
     });
+  }
+
+  void _loadProject(Project newProject) {
+    project = newProject;
+    viewRange = _calculateNumberOfMinutesBetween(
+        project.startingTime, project.endingTime);
+    setState(() {});
   }
 
   double _calculateNumberOfMinutesBetween(DateTime from, DateTime to) {
@@ -48,11 +55,11 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
   }
 
   double _calculateDistanceToLeftBorder(DateTime taskStartedAt) {
-    if (taskStartedAt.compareTo(project!.startingTime) <= 0) {
+    if (taskStartedAt.compareTo(project.startingTime) <= 0) {
       return 0;
     } else {
       return _calculateNumberOfMinutesBetween(
-          project!.startingTime, taskStartedAt);
+          project.startingTime, taskStartedAt);
     }
   }
 
@@ -60,25 +67,24 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
       DateTime taskStartedAt, DateTime taskEndedAt) {
     double projectLength =
         _calculateNumberOfMinutesBetween(taskStartedAt, taskEndedAt);
-    if (taskStartedAt.compareTo(project!.startingTime) >= 0 &&
-        taskStartedAt.compareTo(project!.endingTime) <= 0) {
+    if (taskStartedAt.compareTo(project.startingTime) >= 0 &&
+        taskStartedAt.compareTo(project.endingTime) <= 0) {
       if (projectLength <= viewRange) {
         return projectLength;
       } else {
         return viewRange -
             _calculateNumberOfMinutesBetween(
-                project!.startingTime, taskStartedAt);
+                project.startingTime, taskStartedAt);
       }
-    } else if (taskStartedAt.isBefore(project!.startingTime) &&
-        taskEndedAt.isBefore(project!.startingTime)) {
+    } else if (taskStartedAt.isBefore(project.startingTime) &&
+        taskEndedAt.isBefore(project.startingTime)) {
       return 0;
-    } else if (taskStartedAt.isBefore(project!.startingTime) &&
-        taskEndedAt.isBefore(project!.endingTime)) {
+    } else if (taskStartedAt.isBefore(project.startingTime) &&
+        taskEndedAt.isBefore(project.endingTime)) {
       return projectLength -
-          _calculateNumberOfMinutesBetween(
-              taskStartedAt, project!.startingTime);
-    } else if (taskStartedAt.isBefore(project!.startingTime) &&
-        taskEndedAt.isAfter(project!.endingTime)) {
+          _calculateNumberOfMinutesBetween(taskStartedAt, project.startingTime);
+    } else if (taskStartedAt.isBefore(project.startingTime) &&
+        taskEndedAt.isAfter(project.endingTime)) {
       return viewRange;
     }
     return 0;
@@ -148,7 +154,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
       ),
     ));
 
-    DateTime tempDate = project!.startingTime;
+    DateTime tempDate = project.startingTime;
     int timeZoneOffset = currentTimeZone == TimeZone.quebec ? 0 : 6;
     for (int i = 0; i < viewRange; i++) {
       headerItems.add(SizedBox(
@@ -241,16 +247,16 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
   List<Widget> _buildChartContent({required double chartViewWidth}) {
     List<Widget> chartContent = [];
 
-    final tasks = [...project!.tasks];
+    final tasks = [...project.tasks];
     tasks.sort((a, b) {
       return a.startTime.millisecondsSinceEpoch -
           b.startTime.millisecondsSinceEpoch;
     });
 
     chartContent.add(_buildChartForEachUser(
-        tasks, chartViewWidth, User(id: '-1', name: 'Toustes')));
+        tasks, chartViewWidth, User(id: -1, name: 'Toustes')));
 
-    for (final user in project!.users) {
+    for (final user in project.users) {
       List<Task> projectsOfUser = [];
 
       projectsOfUser = tasks
@@ -266,7 +272,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     return chartContent;
   }
 
-  void _onClickZoom(bool isZoomingIn) {
+  void _onClickedZoom(bool isZoomingIn) {
     isZoomingIn ? currentTimeIncrement-- : currentTimeIncrement++;
     if (currentTimeIncrement < 0) currentTimeIncrement = 0;
     if (currentTimeIncrement >= possibleTimeIncrements.length) {
@@ -274,30 +280,104 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
     }
     timeIncrements = possibleTimeIncrements[currentTimeIncrement];
     viewRange = _calculateNumberOfMinutesBetween(
-        project!.startingTime, project!.endingTime);
+        project.startingTime, project.endingTime);
     setState(() {});
   }
 
-  void _onClickAddTask() async {
-    final task = await showDialog<Task>(
+  void _onClickedChangeTimeZone() => setState(() {
+        currentTimeZone = currentTimeZone == TimeZone.quebec
+            ? TimeZone.europe
+            : TimeZone.quebec;
+      });
+
+  void _onClickedChangeDates() async {
+    DateTime? dateTimeStart;
+    await showDialog(
+      context: context,
+      builder: (context) => Dialog(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 12.0, left: 12.0),
+            child: Text(
+              'Sélectionner la date de début',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+            child: DateTimePickerWidget(
+              dateFormat: 'dd MMMM yyyy HH:mm',
+              locale: DateTimePickerLocale.fr,
+              onConfirm: (dateTime, selectedIndex) => dateTimeStart = dateTime,
+            ),
+          )
+        ],
+      )),
+    );
+    if (!mounted || dateTimeStart == null) return;
+
+    DateTime? dateTimeEnd;
+    await showDialog(
+      context: context,
+      builder: (context) => Dialog(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 12.0, left: 12.0),
+            child: Text(
+              'Sélectionner la date de début',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+            child: DateTimePickerWidget(
+              dateFormat: 'dd MMMM yyyy HH:mm',
+              locale: DateTimePickerLocale.fr,
+              onConfirm: (dateTime, selectedIndex) => dateTimeEnd = dateTime,
+            ),
+          )
+        ],
+      )),
+    );
+    if (!mounted || dateTimeEnd == null) return;
+
+    project.startingTime = dateTimeStart!;
+    project.endingTime = dateTimeEnd!;
+    setState(() {});
+  }
+
+  void _onClickedAddUser() async {
+    await showDialog(
         context: context,
-        builder: (context) {
-          return TaskManager(project: project!);
-        });
+        builder: (context) => ManageUserDialog(project: project));
+    setState(() {});
+  }
+
+  void _onClickedAddTask() async {
+    final task = await showDialog<Task>(
+        context: context, builder: (context) => TaskManager(project: project));
 
     if (task == null) return;
 
-    project!.tasks.add(task);
+    project.tasks.add(task);
     setState(() {});
   }
 
   void _onClickModifyTask(Task taskToModify) async {
-    final idx = project!.tasks.indexOf(taskToModify);
+    final idx = project.tasks.indexOf(taskToModify);
 
     final modifiedTask = await showDialog(
         context: context,
         builder: (context) {
-          return TaskManager(project: project!, taskIndex: idx);
+          return TaskManager(project: project, taskIndex: idx);
         });
 
     if (modifiedTask == null || !mounted) return;
@@ -321,56 +401,59 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
               );
             });
         if (confirm!) {
-          project!.tasks.removeAt(idx);
+          project.tasks.removeAt(idx);
           setState(() {});
         }
         return;
       }
     }
 
-    project!.tasks[idx] = modifiedTask;
+    project.tasks[idx] = modifiedTask;
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return project == null // This is true for a single frame
-        ? Container()
-        : Scaffold(
-            appBar: AppBar(actions: [
-              IconButton(
-                  onPressed: () => setState(() {
-                        currentTimeZone = currentTimeZone == TimeZone.quebec
-                            ? TimeZone.europe
-                            : TimeZone.quebec;
-                      }),
-                  icon: Text(currentTimeZone == TimeZone.quebec ? 'Qc' : 'Fr')),
-              IconButton(
-                icon: const Icon(Icons.zoom_out),
-                onPressed:
-                    currentTimeIncrement == possibleTimeIncrements.length - 1
-                        ? null
-                        : () => _onClickZoom(false),
-                iconSize: 40,
-              ),
-              IconButton(
-                icon: const Icon(Icons.zoom_in),
-                onPressed:
-                    currentTimeIncrement == 0 ? null : () => _onClickZoom(true),
-                iconSize: 40,
-              ),
-              IconButton(
-                icon: const Icon(Icons.add),
-                onPressed: () => _onClickAddTask(),
-                iconSize: 40,
-              ),
-            ]),
-            body: ListView(
-              children: _buildChartContent(
-                chartViewWidth: 3000,
-              ),
-            ),
-            drawer: MyDrawer(project: project!),
-          );
+    return Scaffold(
+      appBar: AppBar(actions: [
+        IconButton(
+          icon: const Icon(Icons.add_task),
+          onPressed: _onClickedAddTask,
+          iconSize: 40,
+        ),
+        IconButton(
+          icon: const Icon(Icons.person_add),
+          onPressed: _onClickedAddUser,
+          iconSize: 40,
+        ),
+        IconButton(
+          icon: const Icon(Icons.date_range),
+          onPressed: _onClickedChangeDates,
+          iconSize: 40,
+        ),
+        IconButton(
+            onPressed: _onClickedChangeTimeZone,
+            icon: Text(currentTimeZone == TimeZone.quebec ? 'Qc' : 'Fr')),
+        IconButton(
+          icon: const Icon(Icons.zoom_out),
+          onPressed: currentTimeIncrement == possibleTimeIncrements.length - 1
+              ? null
+              : () => _onClickedZoom(false),
+          iconSize: 40,
+        ),
+        IconButton(
+          icon: const Icon(Icons.zoom_in),
+          onPressed:
+              currentTimeIncrement == 0 ? null : () => _onClickedZoom(true),
+          iconSize: 40,
+        ),
+      ]),
+      body: ListView(
+        children: _buildChartContent(
+          chartViewWidth: 3000,
+        ),
+      ),
+      drawer: MyDrawer(project: project),
+    );
   }
 }
