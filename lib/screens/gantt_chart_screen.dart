@@ -333,7 +333,7 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
           const Padding(
             padding: EdgeInsets.only(top: 12.0, left: 12.0),
             child: Text(
-              'Sélectionner la date de début',
+              'Sélectionner la date de fin',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
@@ -342,6 +342,8 @@ class _GanttChartScreenState extends State<GanttChartScreen> {
             child: DateTimePickerWidget(
               dateFormat: 'dd MMMM yyyy HH:mm',
               locale: DateTimePickerLocale.fr,
+              initDateTime: dateTimeStart,
+              minDateTime: dateTimeStart,
               onConfirm: (dateTime, selectedIndex) => dateTimeEnd = dateTime,
             ),
           )
